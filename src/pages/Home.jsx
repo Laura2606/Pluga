@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react"; //useEffect: chama a API; // useState:guarda a lista de apps da API
 import { getApps } from "../services/api";
 import Card from "../components/Card";
+import Modal from "../components/Modal";
 
 function Home() {
   const [apps, setApps] = useState([]);
+  const [selectedApp, setSelectedApp] = useState(null);
 
   useEffect(() => {
     async function fetchApps() {
@@ -18,9 +20,17 @@ function Home() {
     fetchApps();
   }, []);
 
+  function handleCardClick(app) {
+    setSelectedApp(app);
+    }
+
+    function closeModal() {
+      setSelectedApp(null);
+    }
+
   return (
     <div style={{ padding: "20px" }}>
-      <h1>Pluga Apps</h1>
+      <h1>As ferramentas que você mais ama, agora juntas</h1>
 
       <div style={{ marginTop: "20px" }}>
         {apps.length === 0 ? (
@@ -28,11 +38,14 @@ function Home() {
         ) : (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "20px" }}>
             {apps.map((app) => (
-              <Card key={app.id} app={app} />
+              <Card key={app.id} app={app} onClick={() => handleCardClick(app)} />
             ))}
           </div>
         )}
       </div>
+      {selectedApp && (
+        <Modal app={selectedApp} onClose={closeModal}/>
+      )}
     </div>
   );
 }

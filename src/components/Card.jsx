@@ -1,12 +1,17 @@
-export default function Card({ app }) {
+export default function Card({ app, onClick }) {
     return (
-      <div style={{
+      <div 
+      onClick={onClick}
+      style={{
         border: "1px solid #ccc",
         padding: "16px",
-        borderRadius: "8px"
+        borderRadius: "8px",
+        textAlign: "center",
+        backgroundColor: "#fafafa",
+        transition: "0.2s",
       }}>
-        <img src={app.icon} alt={app.name} width="60" />
-        <h3>{app.name}</h3>
+        <img src={app.icon} alt={app.name} width="60" style={{marginBottom: "10px"}} />
+        <h3 style={{ fontSize: "1rem"}}>{app.name}</h3>
       </div>
     );
   }
