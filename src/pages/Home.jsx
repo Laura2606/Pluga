@@ -52,35 +52,57 @@ function Home() {
   const totalPages = Math.ceil(filteredApps.length / appsPerPage);
 
   return (
+    
     <div style={{ padding: "20px" }}>
       <h1>As ferramentas que você mais ama, agora juntas</h1>
 
-       {/* Barra de busca */}
-       <input
-        type="text"
-        placeholder="Buscar +100 ferramentas..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        style={{
-          padding: "10px",
-          width: "300px",
-          marginTop: "20px",
-          marginBottom: "20px",
-          border: "1px solid #ccc",
-          borderRadius: "5px",
-        }}
-      />
+      <div
+  style={{
+    maxWidth: "1200px",  // controla até onde a busca pode ir
+    margin: "20px auto",
+    width: "100%",
+    position: "relative",
+  }}
+></div>
 
-       {/* Cards */}
-       {currentApps.length === 0 ? (
-        <p>Nenhuma ferramenta encontrada.</p>
-      ) : (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "20px" }}>
-          {currentApps.map((app) => (
-            <Card key={app.app_id} app={app} onClick={() => handleCardClick(app)} />
-          ))}
-        </div>
-      )}
+<div
+  style={{
+    maxWidth: "1200px", // Largura máxima do conteúdo
+    margin: "0 auto",   // Centraliza horizontalmente
+    padding: "0 20px",  // Espaçamento lateral para telas pequenas
+  }}
+>
+  {/* Barra de busca */}
+  <input
+    type="text"
+    placeholder="Buscar +100 ferramentas..."
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    style={{
+      padding: "20px",
+      width: "100%",
+      border: "1px solid #ccc",
+      borderRadius: "20px",
+      fontSize: "16px",
+      boxSizing: "border-box",
+    }}
+  />
+
+  {/* Cards */}
+  <div
+    style={{
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+      gap: "20px",
+      marginTop: "20px",
+    }}
+  >
+    {currentApps.map((app) => (
+      <Card key={app.app_id} app={app} onClick={() => handleCardClick(app)} />
+    ))}
+  </div>
+</div>
+
 
       {/* Paginação */}
 <div style={{ marginTop: "20px", display: "flex", gap: "10px", alignItems: "center" }}>
