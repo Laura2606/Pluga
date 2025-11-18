@@ -6,6 +6,7 @@ import Modal from "../components/Modal";
 function Home() {
   const [apps, setApps] = useState([]);
   const [selectedApp, setSelectedApp] = useState(null);
+  const [viewedApps, setViewedApps] = useState([]);
 
   useEffect(() => {
     async function fetchApps() {
@@ -21,9 +22,14 @@ function Home() {
   }, []);
 
   function handleCardClick(app) {
+    setViewedApps(prev => {
+      const filtered = prev.filter(item => item.app_id !== app.app_id);
+      return [app, ...filtered].slice(0,4 );
+    });
+    
     setSelectedApp(app);
-    }
 
+  }
     function closeModal() {
       setSelectedApp(null);
     }
@@ -38,13 +44,13 @@ function Home() {
         ) : (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "20px" }}>
             {apps.map((app) => (
-              <Card key={app.id} app={app} onClick={() => handleCardClick(app)} />
+              <Card key={app.app_id} app={app} onClick={() => handleCardClick(app)} />
             ))}
           </div>
         )}
       </div>
       {selectedApp && (
-        <Modal app={selectedApp} onClose={closeModal}/>
+        <Modal app={selectedApp} onClose={closeModal} viewed={viewedApps}/>
       )}
     </div>
   );
