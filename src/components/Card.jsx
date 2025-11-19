@@ -7,7 +7,7 @@ export default function Card({ app, onClick }) {
         padding: "16px",
         borderRadius: "8px",
         textAlign: "center",
-        backgroundColor: "#fafafa",
+        backgroundColor: "#e9f4f5",
         transition: "0.2s",
       }}>
         <img src={app.icon} alt={app.name} width="60" style={{marginBottom: "10px"}} />

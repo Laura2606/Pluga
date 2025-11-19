@@ -5,7 +5,7 @@ import Modal from "../components/Modal";
 
 function Home() {
   const [apps, setApps] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchBox, setSearchBox] = useState("");
   const [selectedApp, setSelectedApp] = useState(null);
   const [viewedApps, setViewedApps] = useState([]);
 
@@ -14,37 +14,28 @@ function Home() {
   const appsPerPage = 12;
 
   useEffect(() => {
-    async function fetchApps() {
-      try {
-        const data = await getApps();
-        setApps(data);
-      } catch (error) {
-        console.error("Erro ao buscar dados:", error);
-      }
-    }
-
-    fetchApps();
+    getApps().then(setApps).catch(()=> console.error ("Erro ao buscar dados"));
+    
   }, []);
 
   function handleCardClick(app) {
-    setViewedApps(prev => {
-      const filtered = prev.filter(item => item.app_id !== app.app_id);
-      return [app, ...filtered].slice(0,4 );
-    });
+    setViewedApps(prev => [app,...prev.filter(item => item.app_id !== app.app_id)].slice(0,4 ));
+    
     
     setSelectedApp(app);
 
   }
+
     function closeModal() {
       setSelectedApp(null);
     }
 
   // Filtrar apps pela busca
   const filteredApps = apps.filter(app =>
-    app.name.toLowerCase().includes(searchTerm.toLowerCase())
+    app.name.toLowerCase().includes(searchBox.toLowerCase())
   );
 
-  // Paginação lógica
+  // Paginação
   const indexOfLastApp = currentPage * appsPerPage;
   const indexOfFirstApp = indexOfLastApp - appsPerPage;
   const currentApps = filteredApps.slice(indexOfFirstApp, indexOfLastApp);
@@ -76,8 +67,8 @@ function Home() {
   <input
     type="text"
     placeholder="Buscar +100 ferramentas..."
-    value={searchTerm}
-    onChange={(e) => setSearchTerm(e.target.value)}
+    value={searchBox}
+    onChange={(e) => setSearchBox(e.target.value)}
     style={{
       padding: "20px",
       width: "100%",
@@ -95,6 +86,7 @@ function Home() {
       gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
       gap: "20px",
       marginTop: "20px",
+  
     }}
   >
     {currentApps.map((app) => (
