@@ -115,18 +115,6 @@ function Home() {
   </button>
 </div>
 
-
-      {/* <div style={{ marginTop: "20px" }}>
-        {apps.length === 0 ? (
-          <p>Carregando...</p>
-        ) : (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "20px" }}>
-            {apps.map((app) => (
-              <Card key={app.app_id} app={app} onClick={() => handleCardClick(app)} />
-            ))}
-          </div>
-        )}
-      </div> */}
       {selectedApp && (
         <Modal app={selectedApp} onClose={closeModal} viewed={viewedApps}/>
       )}
